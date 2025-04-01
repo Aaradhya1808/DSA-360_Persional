@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         DATE_TIME = new Date().format('yyyyMMddHHmmss')
-        DOCKER_IMAGE_NAME = "ram2715/dsa360-${DATE_TIME}"
+        DOCKER_IMAGE_NAME = "sneha1808/dsa360-${DATE_TIME}"
         DOCKERFILE_PATH = 'Dockerfile'
         DOCKERHUB_CREDENTIALS = credentials('dockerpassword')
         PREVIOUS_IMAGE = ''
@@ -17,7 +17,7 @@ pipeline {
         stage('Get Code') {
             steps {
                 echo "Cloning the repository..."
-                git branch: 'main', url: 'https://github.com/the-kiran-academy/DSA360_API.git'
+                git branch: 'main', url: 'https://github.com/Aaradhya1808/DSA-360_Persional.git'
             }
         }
 
@@ -47,7 +47,7 @@ pipeline {
 
                     PREVIOUS_IMAGE = ''
                     existingImages.split('\n').each { img ->
-                        if (img.contains("ram2715/dsa360-")) {
+                        if (img.contains("sneha1808/dsa360-")) {
                             PREVIOUS_IMAGE = img.trim()
                             echo "Found previous image: ${PREVIOUS_IMAGE}"
                         }
@@ -89,7 +89,7 @@ pipeline {
                 script {
                     echo "Pushing Docker image to DockerHub..."
                     withCredentials([string(credentialsId: 'dockertoken', variable: 'dockertoken')]) {
-                        bat "docker login -u ram2715 -p ${dockertoken}"
+                        bat "docker login -u sneha1808 -p ${dockertoken}"
                         bat "docker push ${env.DOCKER_IMAGE_NAME}"
                         echo "Docker image pushed successfully!"
                     }
